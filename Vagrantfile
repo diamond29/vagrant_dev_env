@@ -31,7 +31,10 @@ Vagrant.configure(2) do |config|
 
   use_docker = false
 
-  if use_docker
+  if ENV['USE_DOCKER'] == 'true'
+    config.vm.provider 'docker' do |d|
+      d.image = 'base/archlinux_public'
+    end
   else
     config.vm.provider "virtualbox" do |vb|
       vb.name = "archlinux 64_2"
@@ -47,4 +50,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision 'shell' do |s|
     s.inline = 'localectl set-keymap us'
   end
+
+  #config.vm.provisioner 'chef
 end
