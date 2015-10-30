@@ -29,14 +29,19 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "arch_machine"
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.name = "archlinux 64_2"
-    vb.gui = true
-    vb.memory = "4096"
-    vb.cpus = "2"
-    vb.customize ["modifyvm", :id, "--vram", "128"]
-    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+  use_docker = false
+
+  if use_docker
+  else
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "archlinux 64_2"
+      vb.gui = true
+      vb.memory = "4096"
+      vb.cpus = "2"
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+    end
   end
 
   config.vm.provision 'shell' do |s|
