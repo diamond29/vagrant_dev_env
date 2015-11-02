@@ -45,13 +45,13 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.provision 'shell' do |s|
-    s.inline = 'localectl set-keymap us'
-  end
+  username = ENV['CREATE_USER']
+  password = ENV['CREATE_PASSWORD']
+  ENV['VAGRANT_REPO'] = `git config --get remote.origin.url`
 
-  config.vm.provision 'chef_zero' do |chef|
-    chef.cookbooks_path = 'cookbooks'
-    chef.roles_path = 'roles'
-    chef.add_role dev_env
+  fail 'set user and password' unless !(username.nil? || password.nil?)
+
+  config.vm.provision 'shell' do |s|
+    s.path = 'bootstrap.sh'
   end
 end
