@@ -27,15 +27,13 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
-  config.vm.define "arch_machine"
 
-  use_docker = false
-
-  if ENV['USE_DOCKER'] == 'true'
+  if false
     config.vm.provider 'docker' do |d|
       d.image = 'base/archlinux_public'
     end
   else
+    config.vm.define "arch_machine"
     config.vm.provider "virtualbox" do |vb|
       vb.name = "archlinux 64_2"
       vb.gui = true
@@ -51,5 +49,9 @@ Vagrant.configure(2) do |config|
     s.inline = 'localectl set-keymap us'
   end
 
-  #config.vm.provisioner 'chef
+  config.vm.provision 'chef_zero' do |chef|
+    chef.cookbooks_path = 'cookbooks'
+    chef.roles_path = 'roles'
+    chef.add_role dev_env
+  end
 end

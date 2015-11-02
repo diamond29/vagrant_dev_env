@@ -1,0 +1,10 @@
+{
+  "name": "devenv",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for my dev environment",
+  "run_list": [
+    "recipe[pacman]",
+    "recipe[secret_sauce]"
+  ]
+}
