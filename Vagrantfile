@@ -46,12 +46,6 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision 'shell' do |s|
-    s.inline = 'localectl set-keymap us'
-  end
-
-  config.vm.provision 'chef_zero' do |chef|
-    chef.cookbooks_path = 'cookbooks'
-    chef.roles_path = 'roles'
-    chef.add_role dev_env
+    s.path = 'bootstrap.sh'
   end
 end
